@@ -2,6 +2,7 @@ namespace SpriteKind {
     export const hoe = SpriteKind.create()
     export const seedBag = SpriteKind.create()
 }
+
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (equippedTool == "hoe") {
         if (tiles.tileAtLocationEquals(Farmer.tilemapLocation(), sprites.castle.tileGrass1)) {
@@ -13,6 +14,21 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         }
     }
 })
+
+interface mapSave {
+    name: string,
+    width: number,
+    height: number,
+    tiles: Image[]
+}
+
+let gardenSave:mapSave = {
+    name: "Garden",
+    width: 16,
+    height: 16, 
+    tiles: []
+}
+
 sprites.onOverlap(SpriteKind.Player, SpriteKind.seedBag, function (sprite, otherSprite) {
     equippedTool = "seedBag"
     EquippedItem.setImage(img`
@@ -164,11 +180,11 @@ let SeedBagItem = sprites.create(img`
 tiles.placeOnTile(SeedBagItem, tiles.getTileLocation(4, 2))
 scene.cameraFollowSprite(Farmer)
 controller.moveSprite(Farmer)
-game.onUpdateInterval(5000, function () {
-    for (let value of tiles.getTilesByType(assets.tile`myTile1`)) {
+// game.onUpdateInterval(5000, function () {
+//     for (let value of tiles.getTilesByType(assets.tile`myTile1`)) {
     	
-    }
-    for (let value2 of tiles.getTilesByType(assets.tile`myTile0`)) {
+//     }
+//     for (let value2 of tiles.getTilesByType(assets.tile`myTile0`)) {
     	
-    }
-})
+//     }
+// })
