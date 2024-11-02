@@ -16,18 +16,43 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 
 interface mapSave {
-    name: string,
-    width: number,
-    height: number,
-    tiles: Image[]
+    name: string;
+    width: number;
+    height: number;
+    tiles: Image[];
+    saveTiles(): void;
+    loadTiles(): void;
 }
 
 let gardenSave:mapSave = {
     name: "Garden",
     width: 16,
     height: 16, 
-    tiles: []
+    tiles: [],
+    saveTiles: function(){
+        console.log('saving');
+        for(let x = 0; x < gardenSave.width; x++){
+            for (let y = 0; y < gardenSave.width; y++) {
+                gardenSave.tiles.push(tiles.getTileAt(x, y))
+            }
+
+        }
+    },
+    loadTiles: function () {
+        console.log('saving');
+        let tileInc = 0;
+        for (let x = 0; x < gardenSave.width; x++) {
+            for (let y = 0; y < gardenSave.width; y++) {
+                tiles.setTileAt(tiles.getTileLocation(x, y), gardenSave.tiles[tileInc])
+                tileInc++
+            }
+        }
+    }
 }
+
+
+
+
 
 sprites.onOverlap(SpriteKind.Player, SpriteKind.seedBag, function (sprite, otherSprite) {
     equippedTool = "seedBag"
@@ -180,11 +205,8 @@ let SeedBagItem = sprites.create(img`
 tiles.placeOnTile(SeedBagItem, tiles.getTileLocation(4, 2))
 scene.cameraFollowSprite(Farmer)
 controller.moveSprite(Farmer)
-// game.onUpdateInterval(5000, function () {
-//     for (let value of tiles.getTilesByType(assets.tile`myTile1`)) {
-    	
-//     }
-//     for (let value2 of tiles.getTilesByType(assets.tile`myTile0`)) {
-    	
-//     }
-// })
+game.onUpdateInterval(5000, function () {
+
+})
+
+
